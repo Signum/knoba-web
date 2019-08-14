@@ -8,9 +8,9 @@ import os.path
 BASEDIR='/home/knoba/bot/data'
 
 app = Flask(__name__,
-        static_url_path='/facts/static')
+        static_url_path='/static')
 
-@app.route('/facts/<channel>')
+@app.route('/<channel>')
 def facts(channel):
   #print(channel)
   #channel = request.args.get("channel", "#postfix")
@@ -27,4 +27,14 @@ def facts(channel):
   curs.execute("select keys.key as key,factoids.fact as fact from keys,factoids,relations where keys.id=relations.key_id and factoids.id=relations.fact_id order by key")
   facts = curs.fetchall()
   return render_template('facts.html', channel=channel, facts=facts)
+
+#@app.errorhandler(404)
+#def page_not_found(error):
+#  return str(error), 404
+#  #return render_template('page_not_found.html'), 404
+
+if __name__ == "__main__":
+  app.run()
+else:
+  application = app
 

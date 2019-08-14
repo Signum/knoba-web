@@ -1,0 +1,20 @@
+Apache config:
+
+  <Location "/facts/">
+    ProxyPass uwsgi://127.0.0.1:5005/
+  </Location>
+
+uwsgi config:
+
+[uwsgi]
+chdir = /home/knoba/web
+plugin = python3
+file = facts.py
+callable = app
+uid = knoba
+gid = knoba
+socket = 127.0.0.1:5005
+protocol = uwsgi
+master = true
+vacuum = true
+
